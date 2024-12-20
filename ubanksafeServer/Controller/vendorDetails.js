@@ -24,14 +24,14 @@ module.exports.readvenodersdetails  = async (req, res) => {
       "%'";
     let sqlDate = "SELECT count (*) AS Total FROM tbl_admin WHERE Date(created_on) = ?" ;
     let sqlToFrom = "SELECT count (*) AS Total FROM tbl_admin WHERE Date(created_on) >= ? AND Date(created_on) <= ?"
-    
+
 
     let result = await mysql(searchVal ? sqlCount: date ? sqlDate: to && from ? sqlToFrom  : sql,  date ? [date] : to && from ? [from, to] :"");
     let total = result[0].Total;
     let page = req.body.page ? Number(req.body.page) : 1;
     let limit = req.body.limit ? Number(req.body.limit) : 10;
     let { start, numOfPages } = pagination(total, page, limit);
-    
+    // This is just a commnet for test purpose.
 
     let sql1 = "SELECT tbl_admin.*, DATE_FORMAT(created_on,'%Y-%m-%d %H:%i:%s') AS created_on, DATE_FORMAT(updated_on,'%Y-%m-%d %H:%i:%s') AS updated_on FROM tbl_admin ORDER BY created_on DESC LIMIT ?,?";
     let sql2 =
